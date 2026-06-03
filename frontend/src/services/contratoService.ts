@@ -1,7 +1,10 @@
-import type { Contrato } from '../models/Contrato';
+import type Contrato from '../models/Contrato';
 import { api } from './api';
 
-export async function listarContratos(): Promise<Contrato[]> {
-  const response = await api.get('/contratos');
-  return response.data;
-}
+export const listarContratos = async (
+  url: string,
+  setDados: (data: Contrato[]) => void,
+) => {
+  const resposta = await api.get(url);
+  setDados(resposta.data);
+};
