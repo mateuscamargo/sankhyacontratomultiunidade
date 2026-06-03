@@ -24,13 +24,13 @@ export function Contratos() {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     carregar();
   }, []);
 
   useEffect(() => {
     let result = contratos;
 
-    // Filtrar por pesquisa
     if (searchTerm) {
       result = result.filter(
         (c) =>
@@ -40,20 +40,19 @@ export function Contratos() {
       );
     }
 
-    // Filtrar por status
     if (filters.situacao) {
       result = result.filter((c) =>
         filters.situacao === 'Ativo' ? c.ativo === 'S' : c.ativo === 'N',
       );
     }
 
-    // Filtrar por parceiro
     if (filters.parceiro) {
       result = result.filter((c) =>
         c.nomeParc?.toLowerCase().includes(filters.parceiro.toLowerCase()),
       );
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setFilteredContratos(result);
   }, [contratos, searchTerm, filters]);
 
@@ -96,15 +95,16 @@ export function Contratos() {
                     <th style={{ width: '100px' }}>Empresa</th>
                     <th>Categoria dos Clientes</th>
                     <th>Parceiro</th>
-                    <th>Nome Parceiro (Parceiro)</th>
-                    <th>Descrição (Natureza)</th>
-                    <th>Nome (Usuário última alteração)</th>
+                    <th>Nome Parceiro</th>
+                    <th>Descrição</th>
+                    <th>Usuário alteração</th>
                     <th style={{ width: '100px' }}>Ações</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {filteredContratos.map((c) => (
-                    <tr key={c.numContrato} className="contrato-row">
+                    <tr key={c.numContrato}>
                       <td>
                         <span
                           className={`status-badge ${c.ativo === 'S' ? 'ativo' : 'inativo'}`}
@@ -112,6 +112,7 @@ export function Contratos() {
                           {c.ativo === 'S' ? 'Sim' : 'Não'}
                         </span>
                       </td>
+
                       <td>
                         <strong>{c.numContrato}</strong>
                       </td>
@@ -121,6 +122,7 @@ export function Contratos() {
                       <td>{c.nomeParc || '-'}</td>
                       <td>{c.descricao || '-'}</td>
                       <td>{c.natureza || '-'}</td>
+
                       <td>
                         <Link
                           to={`/contratos/${c.numContrato}`}
@@ -133,6 +135,7 @@ export function Contratos() {
                   ))}
                 </tbody>
               </table>
+
               <div className="table-footer">
                 <p>Total de contratos: {filteredContratos.length}</p>
               </div>
