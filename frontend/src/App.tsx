@@ -1,7 +1,5 @@
 import { BrowserRouter, useLocation } from 'react-router-dom';
-import { Navbar } from './components/navbar/Navbar';
 import { Sidebar } from './components/sidebar/Sidebar';
-import { Footer } from './components/footer/Footer';
 import AppRoutes from './routes/AppRoutes';
 
 function AppContent() {
@@ -22,9 +20,7 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Navbar />
       <AppContent />
-      <Footer />
     </BrowserRouter>
   );
 }

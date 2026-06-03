@@ -1,184 +1,86 @@
-.contratos-page {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: #f5f5f5;
+/* TOOLBAR */
+.grid-toolbar {
+  margin-bottom: 10px;
 }
 
-.contratos-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  background: #fff;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.contratos-header h1 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-}
-
-.btn-novo {
-  background: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
+.grid-toolbar input {
+  padding: 8px;
+  width: 250px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  transition: background 0.3s ease;
 }
 
-.btn-novo:hover {
-  background: #45a049;
-}
-
-.contratos-body {
-  display: flex;
-  flex: 1;
-  gap: 0;
+/* GRID */
+.grid-container {
+  background: #fff;
+  border-radius: 6px;
   overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.contratos-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  background: #fff;
-  margin: 12px;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.contratos-search {
-  padding: 16px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.search-input {
-  width: 100%;
-  max-width: 300px;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 13px;
-  font-family: inherit;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: #1976d2;
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
-}
-
-.table-container {
-  flex: 1;
-  overflow: auto;
-  padding-bottom: 10px;
-}
-
-.contratos-table {
+/* TABLE */
+.grid-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
 }
 
-.contratos-table thead {
-  background: #f5f5f5;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.contratos-table th {
-  padding: 12px 16px;
+.grid-table th {
+  background: #e5e7eb;
   text-align: left;
+  padding: 10px;
   font-weight: 600;
-  color: #666;
-  border-bottom: 1px solid #e0e0e0;
-  white-space: nowrap;
 }
 
-.contratos-table tbody tr {
-  border-bottom: 1px solid #e0e0e0;
-  transition: background 0.2s ease;
+.grid-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
 }
 
-.contratos-table tbody tr:hover {
-  background: #fafafa;
+/* HOVER */
+.grid-table tr:hover {
+  background: #f9fafb;
 }
 
-.contratos-table td {
-  padding: 12px 16px;
-  color: #333;
-}
-
-.status-badge {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 3px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.status-badge.ativo {
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-
-.status-badge.inativo {
-  background: #ffebee;
-  color: #c62828;
-}
-
-.btn-view {
-  color: #1976d2;
-  text-decoration: none;
-  font-weight: 600;
+/* BADGE */
+.badge {
+  padding: 3px 8px;
+  border-radius: 4px;
   font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 3px;
-  transition: all 0.2s ease;
 }
 
-.btn-view:hover {
-  background: #e3f2fd;
+.badge.ok {
+  background: #22c55e;
+  color: white;
+}
+
+.badge.off {
+  background: #ef4444;
+  color: white;
+}
+
+/* BOTÃO */
+.btn {
+  padding: 6px 10px;
+  background: #0073e6;
+  color: white;
   text-decoration: none;
-}
-
-.table-footer {
-  padding: 12px 16px;
-  border-top: 1px solid #e0e0e0;
-  background: #f5f5f5;
-  text-align: right;
+  border-radius: 4px;
   font-size: 12px;
-  color: #666;
 }
 
-.loading,
-.no-data {
-  padding: 40px;
+.btn:hover {
+  background: #005bb5;
+}
+
+/* FOOTER */
+.grid-footer {
+  padding: 10px;
+  font-size: 12px;
+  color: #555;
+}
+
+/* LOADING */
+.loading {
+  padding: 20px;
   text-align: center;
-  color: #999;
-}
-
-@media (max-width: 768px) {
-  .contratos-body {
-    flex-direction: column;
-  }
-
-  .contratos-table {
-    font-size: 12px;
-  }
-
-  .contratos-table th,
-  .contratos-table td {
-    padding: 8px 12px;
-  }
 }

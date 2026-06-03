@@ -1,4 +1,6 @@
-import '../layout/MainLayout.css';
+import { Sidebar } from '../sidebar/Sidebar';
+import { Navbar } from '../navbar/Navbar';
+import './MainLayout.css';
 
 export default function MainLayout({
   children,
@@ -6,13 +8,12 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="layout-container">
-      <div className="sidebar">{/* Sidebar */}</div>
+    <div className="app">
+      <Sidebar />
 
-      <div className="layout-main">
-        <div className="navbar">{/* Navbar */}</div>
-
-        <div className="layout-content">{children}</div>
+      <div className="content-area">
+        <Navbar />
+        <main className="main-content">{children}</main>
       </div>
     </div>
   );

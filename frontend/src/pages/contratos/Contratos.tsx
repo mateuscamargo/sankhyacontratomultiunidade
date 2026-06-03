@@ -1,148 +1,82 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { listarContratos } from '../../services/contratoService';
-import { FilterSidebar } from '../../components/filter-sidebar/FilterSidebar';
-import type Contrato from '../../models/Contrato';
+import { Link } from 'react-router-dom';
 import './Contratos.css';
 
 export function Contratos() {
-  const [contratos, setContratos] = useState<Contrato[]>([]);
-  const [filteredContratos, setFilteredContratos] = useState<Contrato[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [contratos, setContratos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState<Record<string, string>>({});
-
-  async function carregar() {
-    setLoading(true);
-    try {
-      await listarContratos('/contratos', setContratos);
-    } catch (error) {
-      console.error('Erro ao carregar contratos:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/immutability
     carregar();
   }, []);
 
-  useEffect(() => {
-    let result = contratos;
+  async function carregar() {
+    setLoading(true);
+    await listarContratos('/contratos', setContratos);
+    setLoading(false);
+  }
 
-    if (searchTerm) {
-      result = result.filter(
-        (c) =>
-          c.numContrato?.toString().includes(searchTerm) ||
-          c.nomeParc?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          c.codParc?.toString().includes(searchTerm),
-      );
-    }
-
-    if (filters.situacao) {
-      result = result.filter((c) =>
-        filters.situacao === 'Ativo' ? c.ativo === 'S' : c.ativo === 'N',
-      );
-    }
-
-    if (filters.parceiro) {
-      result = result.filter((c) =>
-        c.nomeParc?.toLowerCase().includes(filters.parceiro.toLowerCase()),
-      );
-    }
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setFilteredContratos(result);
-  }, [contratos, searchTerm, filters]);
-
-  const handleFilterChange = (newFilters: Record<string, string>) => {
-    setFilters(newFilters);
-  };
+  const filtrados = contratos.filter((c) =>
+    (c.nomeParc || '').toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
-    <div className="contratos-page">
-      <div className="contratos-header">
-        <h1>Contratos</h1>
-        <button className="btn-novo">+ Novo Contrato</button>
+    <div>
+      <h1>Contratos</h1>
+
+      {/* 🔍 BUSCA */}
+      <div className="grid-toolbar">
+        <input
+          placeholder="Pesquisar contrato..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
 
-      <div className="contratos-body">
-        <FilterSidebar onFiltersChange={handleFilterChange} />
+      {/* GRID */}
+      {loading ? (
+        <div className="loading">Carregando...</div>
+      ) : (
+        <div className="grid-container">
+          <table className="grid-table">
+            <thead>
+              <tr>
+                <th>Nº</th>
+                <th>Parceiro</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
 
-        <div className="contratos-main">
-          <div className="contratos-search">
-            <input
-              type="text"
-              placeholder="🔍 Pesquisar contratos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
-          </div>
+            <tbody>
+              {filtrados.map((c) => (
+                <tr key={c.numContrato}>
+                  <td>{c.numContrato}</td>
+                  <td>{c.nomeParc}</td>
 
-          {loading ? (
-            <div className="loading">Carregando contratos...</div>
-          ) : filteredContratos.length === 0 ? (
-            <div className="no-data">Nenhum contrato encontrado</div>
-          ) : (
-            <div className="table-container">
-              <table className="contratos-table">
-                <thead>
-                  <tr>
-                    <th style={{ width: '80px' }}>Ativo</th>
-                    <th style={{ width: '100px' }}>Nº Contrato</th>
-                    <th style={{ width: '100px' }}>Empresa</th>
-                    <th>Categoria dos Clientes</th>
-                    <th>Parceiro</th>
-                    <th>Nome Parceiro</th>
-                    <th>Descrição</th>
-                    <th>Usuário alteração</th>
-                    <th style={{ width: '100px' }}>Ações</th>
-                  </tr>
-                </thead>
+                  <td>
+                    <span className={`badge ${c.ativo === 'S' ? 'ok' : 'off'}`}>
+                      {c.ativo === 'S' ? 'Ativo' : 'Inativo'}
+                    </span>
+                  </td>
 
-                <tbody>
-                  {filteredContratos.map((c) => (
-                    <tr key={c.numContrato}>
-                      <td>
-                        <span
-                          className={`status-badge ${c.ativo === 'S' ? 'ativo' : 'inativo'}`}
-                        >
-                          {c.ativo === 'S' ? 'Sim' : 'Não'}
-                        </span>
-                      </td>
+                  <td>
+                    <Link to={`/contratos/${c.numContrato}`} className="btn">
+                      Ver
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-                      <td>
-                        <strong>{c.numContrato}</strong>
-                      </td>
-                      <td>{c.empresa || '-'}</td>
-                      <td>{c.categoriaClientes || '-'}</td>
-                      <td>{c.codParc}</td>
-                      <td>{c.nomeParc || '-'}</td>
-                      <td>{c.descricao || '-'}</td>
-                      <td>{c.natureza || '-'}</td>
-
-                      <td>
-                        <Link
-                          to={`/contratos/${c.numContrato}`}
-                          className="btn-view"
-                        >
-                          Ver →
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <div className="table-footer">
-                <p>Total de contratos: {filteredContratos.length}</p>
-              </div>
-            </div>
-          )}
+          <div className="grid-footer">Total: {filtrados.length}</div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

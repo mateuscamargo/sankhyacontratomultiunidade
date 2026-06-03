@@ -1,16 +1,26 @@
-.detail-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
+.contrato-detail-page {
+  max-width: 1200px;
 }
 
-.detail-header h1 {
-  font-size: 18px;
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.detail-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-title h1 {
+  font-size: 20px;
   margin: 0;
 }
 
 .btn-voltar {
-  margin-right: 10px;
   text-decoration: none;
+  color: #0073e6;
 }
