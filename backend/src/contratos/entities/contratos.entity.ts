@@ -3,82 +3,82 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 @Entity({ name: 'TCSCON' })
 export class Contrato {
   @PrimaryColumn()
-  NUMCONTRATO: number;
+  NUMCONTRATO!: number;
 
   @Column({ type: 'date' })
-  DTCONTRATO: Date;
+  DTCONTRATO!: Date;
 
   @Column()
-  CODEMP: number;
+  CODEMP!: number;
 
   @Column()
-  CODPARC: number;
+  CODPARC!: number;
 
   @Column()
-  CODCONTAIO: number;
+  CODCONTAIO!: number;
 
   @Column()
-  CODUSU: number;
+  CODUSU!: number;
 
   @Column({ type: 'date' })
-  DTBASEREAJ: Date;
+  DTBASEREAJ!: Date;
 
   @Column()
-  FREQREAJ: number;
+  FREQREAJ!: number;
 
   @Column({ length: 1 })
-  TIPPAG: string;
+  TIPPAG!: string;
 
   @Column()
-  DIAPAG: number;
+  DIAPAG!: number;
 
   @Column({ length: 1 })
-  IMPPRECINDIV: string;
+  IMPPRECINDIV!: string;
 
   @Column({ length: 1 })
-  GERARNF: string;
+  GERARNF!: string;
 
   @Column({ length: 1 })
-  IMPRIME: string;
+  IMPRIME!: string;
 
   @Column()
-  GATILHO: number;
+  GATILHO!: number;
 
   @Column()
-  RECDESP: number;
+  RECDESP!: number;
 
   @Column()
-  TIPOTITULO: number;
+  TIPOTITULO!: number;
 
   @Column({ length: 1 })
-  TIPOCONTRATO: string;
+  TIPOCONTRATO!: string;
 
   @Column()
-  CODPROJ: number;
+  CODPROJ!: number;
 
   @Column({ length: 1, nullable: true })
   ATIVO?: string;
 
   @Column({ length: 1 })
-  DIAUTIL: string;
+  DIAUTIL!: string;
 
   @Column({ length: 1 })
-  TEMIRF: string;
+  TEMIRF!: string;
 
   @Column({ length: 1 })
-  TEMISS: string;
+  TEMISS!: string;
 
   @Column({ length: 1 })
-  RETEMISS: string;
+  RETEMISS!: string;
 
   @Column({ length: 1 })
-  TIPOARM: string;
+  TIPOARM!: string;
 
   @Column({ length: 1 })
-  TIPO: string;
+  TIPO!: string;
 
   @Column()
-  CODPROJSINT: number;
+  CODPROJSINT!: number;
 
   @Column({ length: 1, nullable: true })
   FERIADOMUN?: string;
@@ -90,10 +90,10 @@ export class Contrato {
   FERIADONAC?: string;
 
   @Column({ length: 1 })
-  ACESSAHISTSUBOS: string;
+  ACESSAHISTSUBOS!: string;
 
   @Column({ length: 1 })
-  LOCACAOBEM: string;
+  LOCACAOBEM!: string;
 
   @Column({ nullable: true })
   CODGPC?: number;
@@ -102,62 +102,62 @@ export class Contrato {
   CODCID?: number;
 
   @Column({ length: 1 })
-  FATURPRORATA: string;
+  FATURPRORATA!: string;
 
   @Column({ length: 1 })
-  CONTROLOCBENS: string;
+  CONTROLOCBENS!: string;
 
   @Column({ length: 1 })
-  GERARFINNOTA: string;
+  GERARFINNOTA!: string;
 
   @Column({ length: 1 })
-  PERCOBRA: string;
+  PERCOBRA!: string;
 
   @Column({ length: 1 })
-  PERDESC: string;
+  PERDESC!: string;
 
   @Column({ length: 1 })
-  PERDESCCON: string;
+  PERDESCCON!: string;
 
   @Column({ length: 1 })
-  SITCONT: string;
+  SITCONT!: string;
 
   @Column({ length: 1 })
-  TIPCOBR: string;
+  TIPCOBR!: string;
 
   @Column({ length: 1 })
-  TIPQUEBRA: string;
+  TIPQUEBRA!: string;
 
   @Column({ length: 1 })
-  VALDEDIN: string;
+  VALDEDIN!: string;
 
   @Column({ length: 1 })
-  COBPROPORCAR: string;
+  COBPROPORCAR!: string;
 
   @Column({ length: 1 })
-  ULTATABUMI: string;
+  ULTATABUMI!: string;
 
   @Column({ length: 1 })
-  PERCOBRAR: string;
+  PERCOBRAR!: string;
 
   @Column({ nullable: true })
   NUMCSTC?: number;
 
   @Column({ length: 1 })
-  REGLAUSADIA: string;
+  REGLAUSADIA!: string;
 
   @Column({ type: 'float' })
-  QTDNEG: number;
+  QTDNEG!: number;
 
   @Column({ length: 1 })
-  MODALIDADE: string;
+  MODALIDADE!: string;
 
   @Column({ type: 'float' })
-  VALNEGSC: number;
+  VALNEGSC!: number;
 
   @Column({ length: 1 })
-  EXIGEPPEDIDOPC: string;
+  EXIGEPPEDIDOPC!: string;
 
   @Column({ type: 'float' })
-  PPAUTASC: number;
+  PPAUTASC!: number;
 }

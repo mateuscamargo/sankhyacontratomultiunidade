@@ -3,22 +3,22 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity({ name: 'AD_TCSCONUNIDADES' })
 export class ContratoUnidades {
   @PrimaryGeneratedColumn()
-  ID: number;
+  ID!: number;
 
   @Column()
-  NUMCONTRATO: number;
+  NUMCONTRATO!: number;
 
   @Column()
-  CODEMP: number;
+  CODEMP!: number;
 
   @Column()
-  CODCENCUS: number;
+  CODCENCUS!: number;
 
   @Column({ type: 'date' })
-  DTINCLUSAO: Date;
+  DTINCLUSAO!: Date;
 
   @Column({ length: 1 })
-  ATIVO: string;
+  ATIVO!: string;
 
   @Column({ nullable: true })
   CODUSU_INC?: number;

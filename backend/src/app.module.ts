@@ -16,7 +16,7 @@ import { ContratosController } from './contratos/controllers/contratos.controlle
       username: 'root',
       password: 'root',
       database: 'db_contratomultiunidades',
-      entities: [],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     ContratosModule,
