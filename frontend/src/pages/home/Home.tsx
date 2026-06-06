@@ -3,20 +3,6 @@ import './Home.css';
 export default function Home() {
   return (
     <div>
-      <h1>Dashboard</h1>
-      <p>Bem-vindo ao sistema de contratos multiunidade</p>
-
-      <div style={cardContainer}>
-        <div style={card}>
-          <h3>Contratos</h3>
-          <p>Gerencie todos os contratos cadastrados</p>
-        </div>
-
-        <div style={card}>
-          <h3>Unidades</h3>
-          <p>Console das unidades vinculadas</p>
-        </div>
-      </div>
     </div>
   );
 }

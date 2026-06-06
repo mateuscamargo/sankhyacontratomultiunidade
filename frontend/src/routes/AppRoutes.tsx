@@ -1,9 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import MainLayout from '../components/layout/MainLayout';
 
-import Home from '../pages/home/Home';
 import { ContratoDetail } from '../pages/contratos/ContratoDetail';
 import { Contratos } from '../pages/contratos/Contratos';
+import Home from '../pages/home/Home';
 
 export default function AppRoutes() {
   return (

@@ -1,5 +1,6 @@
-import { Sidebar } from '../sidebar/Sidebar';
+import { useLocation } from 'react-router-dom';
 import { Navbar } from '../navbar/Navbar';
+import { Sidebar } from '../sidebar/Sidebar';
 import './MainLayout.css';
 
 export default function MainLayout({
@@ -7,11 +8,15 @@ export default function MainLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="app">
-      <Sidebar />
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const hideSidebar = isHome || location.pathname.startsWith('/contratos');
 
-      <div className="content-area">
+  return (
+    <div className={`app ${hideSidebar ? 'no-sidebar' : ''}`}>
+      {!hideSidebar && <Sidebar />}
+
+      <div className={`content-area ${hideSidebar ? 'no-sidebar' : ''}`}>
         <Navbar />
         <main className="main-content">{children}</main>
       </div>
