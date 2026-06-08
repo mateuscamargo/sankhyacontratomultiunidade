@@ -1,12 +1,31 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
-@Entity({ name: 'TCSCON' })
+import { Empresa } from 'src/empresas/entities/empresa.entity';
+import { Parceiro } from 'src/parceiros/entities/parceiro.entity';
+import { Contato } from 'src/contatos/entities/contato.entity';
+import { CentroCusto } from 'src/centro-custo/entities/centro-custo.entity';
+import { Natureza } from 'src/naturezas/entities/natureza.entity';
+import { TipoTitulo } from 'src/tipo-titulo/entities/tipo-titulo.entity';
+import { TipoNegociacao } from 'src/tipo-negociacao/entities/tipo-negociacao.entity';
+import { Top } from 'src/tipo-operacao/entities/tipo-operacao.entity';
+
+@Entity({ name: 'AD_CONTRATO' }) // você pode ajustar o nome depois
 export class Contrato {
-  @PrimaryColumn()
-  NUMCONTRATO!: number;
+  @PrimaryGeneratedColumn()
+  NUCONTRATO!: number;
 
-  @Column({ type: 'date' })
-  DTCONTRATO!: Date;
+  // =========================
+  // CAMPOS PRINCIPAIS
+  // =========================
+
+  @Column()
+  NUMCONTRATO!: number;
 
   @Column()
   CODEMP!: number;
@@ -15,149 +34,103 @@ export class Contrato {
   CODPARC!: number;
 
   @Column()
-  CODCONTAIO!: number;
+  CODCONTATO!: number;
 
-  @Column()
-  CODUSU!: number;
+  @Column({ length: 100 })
+  LOCALUTILIZACAO!: string;
 
   @Column({ type: 'date' })
-  DTBASEREAJ!: Date;
+  DTCONTRATO!: Date;
+
+  @Column({ length: 1, default: 'S' })
+  ATIVO!: string;
+
+  // =========================
+  // FINANCEIRO / PROPRIEDADES
+  // =========================
 
   @Column()
-  FREQREAJ!: number;
-
-  @Column({ length: 1 })
-  TIPPAG!: string;
+  CODCENCUS!: number;
 
   @Column()
-  DIAPAG!: number;
-
-  @Column({ length: 1 })
-  IMPPRECINDIV!: string;
-
-  @Column({ length: 1 })
-  GERARNF!: string;
-
-  @Column({ length: 1 })
-  IMPRIME!: string;
+  CODNAT!: number;
 
   @Column()
-  GATILHO!: number;
+  CODTIPTIT!: number;
 
   @Column()
-  RECDESP!: number;
+  CODTIPVENDA!: number;
 
   @Column()
-  TIPOTITULO!: number;
+  CODTIPOPER!: number;
 
-  @Column({ length: 1 })
-  TIPOCONTRATO!: string;
+  @Column({ type: 'date' })
+  DTBASE!: Date;
 
-  @Column()
-  CODPROJ!: number;
-
-  @Column({ length: 1, nullable: true })
-  ATIVO?: string;
-
-  @Column({ length: 1 })
-  DIAUTIL!: string;
-
-  @Column({ length: 1 })
-  TEMIRF!: string;
-
-  @Column({ length: 1 })
-  TEMISS!: string;
-
-  @Column({ length: 1 })
-  RETEMISS!: string;
-
-  @Column({ length: 1 })
-  TIPOARM!: string;
-
-  @Column({ length: 1 })
-  TIPO!: string;
+  @Column({ type: 'date' })
+  DTTERMINO!: Date;
 
   @Column()
-  CODPROJSINT!: number;
+  FREQUENCIA!: number;
 
-  @Column({ length: 1, nullable: true })
-  FERIADOMUN?: string;
+  @Column()
+  DIAVENCIMENTO!: number;
 
-  @Column({ length: 1, nullable: true })
-  FERIADOEST?: string;
+  // =========================
+  // VALORES
+  // =========================
 
-  @Column({ length: 1, nullable: true })
-  FERIADONAC?: string;
+  @Column({ type: 'float', nullable: true })
+  VLRMENSAL?: number;
 
-  @Column({ length: 1 })
-  ACESSAHISTSUBOS!: string;
+  @Column({ type: 'float', nullable: true })
+  VLRCONTRATO?: number;
 
-  @Column({ length: 1 })
-  LOCACAOBEM!: string;
+  // =========================
+  // OBS
+  // =========================
 
-  @Column({ nullable: true })
-  CODGPC?: number;
+  @Column({ length: 500, nullable: true })
+  OBSERVACAO?: string;
 
-  @Column({ nullable: true })
-  CODCID?: number;
+  // =========================
+  // RELACIONAMENTOS
+  // =========================
 
-  @Column({ length: 1 })
-  FATURPRORATA!: string;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  @ManyToOne(() => Empresa)
+  @JoinColumn({ name: 'CODEMP' })
+  empresa!: Empresa;
 
-  @Column({ length: 1 })
-  CONTROLOCBENS!: string;
+  @ManyToOne(() => Parceiro)
+  @JoinColumn({ name: 'CODPARC' })
+  parceiro!: Parceiro;
 
-  @Column({ length: 1 })
-  GERARFINNOTA!: string;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  @ManyToOne(() => Contato)
+  @JoinColumn([
+    { name: 'CODPARC', referencedColumnName: 'CODPARC' },
+    { name: 'CODCONTATO', referencedColumnName: 'CODCONTATO' },
+  ])
+  contato!: Contato;
 
-  @Column({ length: 1 })
-  PERCOBRA!: string;
+  @ManyToOne(() => CentroCusto)
+  @JoinColumn({ name: 'CODCENCUS' })
+  centroCusto!: CentroCusto;
 
-  @Column({ length: 1 })
-  PERDESC!: string;
+  @ManyToOne(() => Natureza)
+  @JoinColumn({ name: 'CODNAT' })
+  natureza!: Natureza;
 
-  @Column({ length: 1 })
-  PERDESCCON!: string;
+  @ManyToOne(() => TipoTitulo)
+  @JoinColumn({ name: 'CODTIPTIT' })
+  tipoTitulo!: TipoTitulo;
 
-  @Column({ length: 1 })
-  SITCONT!: string;
+  @ManyToOne(() => TipoNegociacao)
+  @JoinColumn({ name: 'CODTIPVENDA' })
+  tipoNegociacao!: TipoNegociacao;
 
-  @Column({ length: 1 })
-  TIPCOBR!: string;
-
-  @Column({ length: 1 })
-  TIPQUEBRA!: string;
-
-  @Column({ length: 1 })
-  VALDEDIN!: string;
-
-  @Column({ length: 1 })
-  COBPROPORCAR!: string;
-
-  @Column({ length: 1 })
-  ULTATABUMI!: string;
-
-  @Column({ length: 1 })
-  PERCOBRAR!: string;
-
-  @Column({ nullable: true })
-  NUMCSTC?: number;
-
-  @Column({ length: 1 })
-  REGLAUSADIA!: string;
-
-  @Column({ type: 'float' })
-  QTDNEG!: number;
-
-  @Column({ length: 1 })
-  MODALIDADE!: string;
-
-  @Column({ type: 'float' })
-  VALNEGSC!: number;
-
-  @Column({ length: 1 })
-  EXIGEPPEDIDOPC!: string;
-
-  @Column({ type: 'float' })
-  PPAUTASC!: number;
+  @ManyToOne(() => Top)
+  @JoinColumn({ name: 'CODTIPOPER' })
+  top!: Top;
 }
