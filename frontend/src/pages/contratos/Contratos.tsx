@@ -50,7 +50,7 @@ export function Contratos() {
   }, [viewMode, selectedRow, contratos]);
 
   const filtrados = contratos.filter((c) =>
-    (c.nomeParc || c.numContrato?.toString() || '')
+    (c.parceiro?.NOMEPARC || c.numContrato?.toString() || '')
       .toLowerCase()
       .includes(search.toLowerCase()),
   );
@@ -248,6 +248,7 @@ export function Contratos() {
             </div>
           ),
         },
+        /*
         {
           id: 'execucao',
           label: 'Execução',
@@ -268,9 +269,10 @@ export function Contratos() {
             </div>
           ),
         },
+        */
         {
           id: 'unidades',
-          label: 'Contrato-Unidades',
+          label: 'Unidades',
           content: (
             <div className="tab-content">
               <div className="unidades-toolbar">
@@ -524,12 +526,12 @@ export function Contratos() {
                               className={`ativo-dot ${c.ativo === 'S' ? 'on' : 'off'}`}
                             />
                           </td>
-                          <td>{c.empresa || '—'}</td>
+                          <td>{c.empresa?.RAZAOABREV ?? '—'}</td>
                           <td className="num-col">{c.numContrato}</td>
                           <td>{c.categoriaClientes || '—'}</td>
                           <td className="num-col">{c.codParc}</td>
-                          <td>{c.nomeParc || '—'}</td>
-                          <td>{c.descricao || '—'}</td>
+                          <td>{c.parceiro?.NOMEPARC ?? '—'}</td>
+                          <td>{c.natureza?.DESCRNAT ?? '—'}</td>
                         </tr>
                       ))
                     )}

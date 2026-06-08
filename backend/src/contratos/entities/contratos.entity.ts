@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import { Empresa } from 'src/empresas/entities/empresa.entity';
@@ -14,8 +15,9 @@ import { Natureza } from 'src/naturezas/entities/natureza.entity';
 import { TipoTitulo } from 'src/tipo-titulo/entities/tipo-titulo.entity';
 import { TipoNegociacao } from 'src/tipo-negociacao/entities/tipo-negociacao.entity';
 import { Top } from 'src/tipo-operacao/entities/tipo-operacao.entity';
+import { ContratoUnidades } from 'src/contrato-unidades/entities/contrato-unidades.entity';
 
-@Entity({ name: 'AD_CONTRATO' })
+@Entity({ name: 'TCSCON' })
 export class Contrato {
   @PrimaryGeneratedColumn()
   NUCONTRATO!: number;
@@ -29,7 +31,7 @@ export class Contrato {
   @Column()
   CODPARC!: number;
 
-  @Column()
+  @Column({ nullable: true })
   CODCONTATO!: number;
 
   @Column({ length: 100 })
@@ -77,6 +79,7 @@ export class Contrato {
   @Column({ length: 500, nullable: true })
   OBSERVACAO?: string;
 
+  // RELAÇÕES
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   @ManyToOne(() => Empresa)
   @JoinColumn({ name: 'CODEMP' })
@@ -113,4 +116,8 @@ export class Contrato {
   @ManyToOne(() => Top)
   @JoinColumn({ name: 'CODTIPOPER' })
   top!: Top;
+
+  // ✅ RELAÇÃO COM UNIDADES
+  @OneToMany(() => ContratoUnidades, (unidade) => unidade.contrato)
+  unidades!: ContratoUnidades[];
 }

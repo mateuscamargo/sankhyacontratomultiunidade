@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+
+import { Contrato } from 'src/contratos/entities/contratos.entity';
+import { CentroCusto } from 'src/centro-custo/entities/centro-custo.entity';
 
 @Entity({ name: 'AD_TCSCONUNIDADES' })
 export class ContratoUnidades {
@@ -28,4 +37,14 @@ export class ContratoUnidades {
 
   @Column({ length: 500, nullable: true })
   OBSERVACAO?: string;
+
+  // ✅ RELAÇÃO COM CONTRATO
+  @ManyToOne(() => Contrato, (contrato) => contrato.unidades)
+  @JoinColumn({ name: 'NUMCONTRATO', referencedColumnName: 'NUMCONTRATO' })
+  contrato!: Contrato;
+
+  // ✅ RELAÇÃO COM CENTRO DE CUSTO (OPCIONAL, MAS RECOMENDADO)
+  @ManyToOne(() => CentroCusto)
+  @JoinColumn({ name: 'CODCENCUS' })
+  centroCusto!: CentroCusto;
 }
