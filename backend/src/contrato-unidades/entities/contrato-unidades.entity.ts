@@ -17,7 +17,7 @@ export class ContratoUnidades {
   @Column({ type: 'date' })
   DTINCLUSAO!: Date;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'S' })
   ATIVO!: string;
 
   @Column({ nullable: true })

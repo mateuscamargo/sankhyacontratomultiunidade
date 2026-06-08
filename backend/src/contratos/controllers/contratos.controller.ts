@@ -20,31 +20,31 @@ export class ContratosController {
 
   @Get()
   async getAll(): Promise<Contrato[]> {
-    return await this.contratosService.findAll();
+    return this.contratosService.findAll();
   }
 
   @Get('/:id')
   async getById(@Param('id', ParseIntPipe) id: number): Promise<Contrato> {
-    return await this.contratosService.findById(id);
+    return this.contratosService.findById(id);
   }
 
   @Get('/parceiro/:codparc')
   async getByParceiro(
     @Param('codparc', ParseIntPipe) codparc: number,
   ): Promise<Contrato[]> {
-    return await this.contratosService.findByParceiro(codparc);
+    return this.contratosService.findByParceiro(codparc);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() contrato: Contrato): Promise<Contrato> {
-    return await this.contratosService.create(contrato);
+    return this.contratosService.create(contrato);
   }
 
   @Put()
   @HttpCode(HttpStatus.OK)
   async update(@Body() contrato: Contrato): Promise<Contrato> {
-    return await this.contratosService.update(contrato);
+    return this.contratosService.update(contrato);
   }
 
   @Delete('/:id')

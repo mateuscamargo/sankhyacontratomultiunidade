@@ -11,7 +11,18 @@ export class ContratosService {
   ) {}
 
   async findAll(): Promise<Contrato[]> {
-    return await this.contratoRepository.find();
+    return this.contratoRepository.find({
+      relations: [
+        'empresa',
+        'parceiro',
+        'contato',
+        'centroCusto',
+        'natureza',
+        'tipoTitulo',
+        'tipoNegociacao',
+        'top',
+      ],
+    });
   }
 
   async findById(id: number): Promise<Contrato> {
@@ -27,24 +38,22 @@ export class ContratosService {
   }
 
   async findByParceiro(codparc: number): Promise<Contrato[]> {
-    return await this.contratoRepository.find({
+    return this.contratoRepository.find({
       where: { CODPARC: codparc },
     });
   }
 
   async create(contrato: Contrato): Promise<Contrato> {
-    return await this.contratoRepository.save(contrato);
+    return this.contratoRepository.save(contrato);
   }
 
   async update(contrato: Contrato): Promise<Contrato> {
     await this.findById(contrato.NUMCONTRATO);
-
-    return await this.contratoRepository.save(contrato);
+    return this.contratoRepository.save(contrato);
   }
 
   async delete(id: number): Promise<void> {
-    const contrato = await this.findById(id);
-
-    await this.contratoRepository.delete(contrato);
+    await this.findById(id);
+    await this.contratoRepository.delete({ NUMCONTRATO: id });
   }
 }

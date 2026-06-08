@@ -12,10 +12,10 @@ export class CentroCusto {
   CODCENCUSPAI!: number;
 
   @Column({ length: 1 })
-  ATIVO!: string; // S ou N
+  ATIVO!: string;
 
   @Column({ length: 1 })
-  ANALITICO!: string; // S ou N
+  ANALITICO!: string;
 
   @Column()
   GRAU!: number;

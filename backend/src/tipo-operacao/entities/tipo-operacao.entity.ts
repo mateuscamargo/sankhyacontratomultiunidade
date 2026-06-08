@@ -14,8 +14,8 @@ export class Top {
   @Column({ length: 1 })
   TIPMOV!: string;
 
-  @Column({ nullable: true })
-  ATUALFIN?: number;
+  @Column({ default: 0 })
+  ATUALFIN!: number;
 
   @Column({ length: 1 })
   TIPATUALFIN!: string;

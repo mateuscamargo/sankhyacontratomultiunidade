@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ContratoUnidadesService } from './services/contrato-unidades.service';
 import { ContratoUnidadesController } from './controllers/contrato-unidades.controller';
-import { ContratoUnidades } from './entitties/contrato-unidades.entity';
+import { ContratoUnidades } from './entities/contrato-unidades.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ContratoUnidades])],

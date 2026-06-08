@@ -17,7 +17,7 @@ export class TipoTitulo {
   @Column({ length: 1 })
   EXPTES!: string;
 
-  @Column()
+  @Column({ default: 0 })
   EXPGRS!: number;
 
   @Column({ length: 1 })
@@ -29,7 +29,7 @@ export class TipoTitulo {
   @Column({ length: 1 })
   TRANSFDIF!: string;
 
-  @Column()
+  @Column({ default: 99 })
   INDTIT!: number;
 
   @Column({ length: 1 })
@@ -44,10 +44,10 @@ export class TipoTitulo {
   @Column({ length: 1 })
   FASTBAIXA!: string;
 
-  @Column()
+  @Column({ default: 0 })
   PRAZO!: number;
 
-  @Column()
+  @Column({ default: 0 })
   CODGRUPOTIPTIT!: number;
 
   @Column({ length: 1 })
@@ -62,7 +62,7 @@ export class TipoTitulo {
   @Column({ length: 1 })
   ATIVO!: string;
 
-  @Column()
+  @Column({ default: 0 })
   CODPARCTEF!: number;
 
   @Column({ length: 1 })
@@ -71,7 +71,7 @@ export class TipoTitulo {
   @Column({ length: 1 })
   AJUSTAVP!: string;
 
-  @Column()
+  @Column({ default: 0 })
   NROPARCELAS!: number;
 
   @Column({ length: 1 })

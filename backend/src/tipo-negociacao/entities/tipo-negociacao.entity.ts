@@ -29,13 +29,13 @@ export class TipoNegociacao {
   @Column({ nullable: true })
   TAXAJURO?: number;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'U' })
   TIPTAXA!: string;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'I' })
   TIPJURO!: string;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'S' })
   VALPRAZOCLIENTE!: string;
 
   @Column({ nullable: true })
@@ -47,8 +47,8 @@ export class TipoNegociacao {
   @Column({ nullable: true })
   PRAZOMEDMAX?: number;
 
-  @Column({ nullable: true })
-  NROPARCELAS?: number;
+  @Column({ default: 0 })
+  NROPARCELAS!: number;
 
   @Column({ nullable: true })
   PRAZOMIN?: number;
@@ -56,18 +56,18 @@ export class TipoNegociacao {
   @Column({ nullable: true })
   PRAZOMAXPRIPARC?: number;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'N' })
   FIXAVENC!: string;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'S' })
   EMITEBOLETA!: string;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'N' })
   EMITEDUPL!: string;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'N' })
   SOMAPRAZOCLIENTE!: string;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'S' })
   PODECONSUMIDOR!: string;
 }

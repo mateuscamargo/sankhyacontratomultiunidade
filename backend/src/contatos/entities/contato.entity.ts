@@ -32,18 +32,18 @@ export class Contato {
   @Column({ length: 11, nullable: true })
   CPF?: string;
 
-  @Column({ length: 1 })
-  ATIVO!: string; // S ou N
+  @Column({ length: 1, default: 'S' })
+  ATIVO!: string;
 
   @Column({ type: 'date', nullable: true })
   DTCAD?: Date;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'N' })
   RECEBEBOLETOEMAIL!: string;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'N' })
   RECEBENOTAEMAIL!: string;
 
-  @Column({ length: 1 })
+  @Column({ length: 1, default: 'N' })
   SOCIO!: string;
 }

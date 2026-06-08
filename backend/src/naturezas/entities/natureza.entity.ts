@@ -8,8 +8,8 @@ export class Natureza {
   @Column({ length: 40 })
   DESCRNAT!: string;
 
-  @Column({ length: 1 })
-  INCRESULT!: string; // S ou N
+  @Column({ length: 1, default: 'S' })
+  INCRESULT!: string;
 
   @Column({ nullable: true })
   CODCTACTB?: number;
@@ -23,11 +23,11 @@ export class Natureza {
   @Column()
   GRAU!: number;
 
-  @Column({ length: 1 })
-  ATIVA!: string; // S ou N
+  @Column({ length: 1, default: 'S' })
+  ATIVA!: string;
 
-  @Column({ length: 1 })
-  ANALITICA!: string; // S ou N
+  @Column({ length: 1, default: 'S' })
+  ANALITICA!: string;
 
   @Column({ nullable: true })
   CODCTACTB2?: number;
@@ -39,7 +39,7 @@ export class Natureza {
   CODHISTCTB2?: number;
 
   @Column({ length: 1, nullable: true })
-  TIPNAT?: string; // R (receita) ou D (despesa)
+  TIPNAT?: string;
 
   @Column({ type: 'timestamp', nullable: true })
   DHALTER?: Date;

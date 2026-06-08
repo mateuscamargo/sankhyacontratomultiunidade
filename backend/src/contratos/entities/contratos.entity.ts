@@ -15,14 +15,10 @@ import { TipoTitulo } from 'src/tipo-titulo/entities/tipo-titulo.entity';
 import { TipoNegociacao } from 'src/tipo-negociacao/entities/tipo-negociacao.entity';
 import { Top } from 'src/tipo-operacao/entities/tipo-operacao.entity';
 
-@Entity({ name: 'AD_CONTRATO' }) // você pode ajustar o nome depois
+@Entity({ name: 'AD_CONTRATO' })
 export class Contrato {
   @PrimaryGeneratedColumn()
   NUCONTRATO!: number;
-
-  // =========================
-  // CAMPOS PRINCIPAIS
-  // =========================
 
   @Column()
   NUMCONTRATO!: number;
@@ -44,10 +40,6 @@ export class Contrato {
 
   @Column({ length: 1, default: 'S' })
   ATIVO!: string;
-
-  // =========================
-  // FINANCEIRO / PROPRIEDADES
-  // =========================
 
   @Column()
   CODCENCUS!: number;
@@ -76,26 +68,14 @@ export class Contrato {
   @Column()
   DIAVENCIMENTO!: number;
 
-  // =========================
-  // VALORES
-  // =========================
+  @Column({ type: 'decimal', precision: 15, scale: 2 })
+  VLRMENSAL!: number;
 
-  @Column({ type: 'float', nullable: true })
-  VLRMENSAL?: number;
-
-  @Column({ type: 'float', nullable: true })
+  @Column({ type: 'decimal', precision: 15, scale: 2, nullable: true })
   VLRCONTRATO?: number;
-
-  // =========================
-  // OBS
-  // =========================
 
   @Column({ length: 500, nullable: true })
   OBSERVACAO?: string;
-
-  // =========================
-  // RELACIONAMENTOS
-  // =========================
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   @ManyToOne(() => Empresa)
