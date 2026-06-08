@@ -24,3 +24,114 @@
   text-decoration: none;
   color: #0073e6;
 }
+
+.close-tab-btn {
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.close-tab-btn:hover {
+  background: #f5f5f5;
+}
+
+.detail-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  gap: 12px;
+}
+
+.toolbar-left {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.toolbar-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.tb-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tb-search {
+  height: 32px;
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+/* Header layout similar to Sankhya */
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.contract-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.contract-badge {
+  background: #c62828;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.contract-number {
+  font-weight: 700;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.tab-label {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}

@@ -102,7 +102,7 @@ export function Navbar() {
           </button>
 
           <div className="brand">
-            <div className="brand-logo">Sankhya</div>
+            <Link to="/" className="brand-logo" onClick={() => setMenuOpen(false)}>Sankhya</Link>
           </div>
         </div>
 
@@ -113,7 +113,7 @@ export function Navbar() {
               placeholder="Pesquisar"
               value={query}
               onChange={(e) => void handleSearchChange(e.target.value)}
-              onFocus={() => { if (results.length) setShowDropdown(true); }}
+              onFocus={() => { if (results.length || menuResults.length) setShowDropdown(true); }}
             />
             <button
               className="search-btn"
@@ -163,6 +163,30 @@ export function Navbar() {
         </div>
       </nav>
 
+      {/* Desktop App Launcher (opens when menuOpen and not small screen) */}
+      {!isSmallScreen && menuOpen && (
+        <div className="app-launcher" role="dialog" aria-label="App Launcher">
+          <div className="app-launcher-inner">
+            <div className="app-launcher-grid">
+              {[
+                { id: 'contratos', label: 'Contratos', icon: '📋', route: '/contratos' },
+              ].map((a) => (
+                <div
+                  key={a.id}
+                  className="app-item"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    if (a.route) navigate(a.route);
+                  }}
+                >
+                  <div className="app-icon">{a.icon}</div>
+                  <div className="app-label">{a.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
       {/* Mobile Menu overlay for small screens (renders only on small viewports) */}
       {isSmallScreen && (
         <>

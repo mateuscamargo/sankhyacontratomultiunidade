@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Tabs, type TabItem } from '../../components/tabs/Tabs';
-import { listarUnidades } from '../../services/contratoUnidadeService';
 import type Contrato from '../../models/Contrato';
 import type ContratoUnidade from '../../models/ContratoUnidade';
+import { listarUnidades } from '../../services/contratoUnidadeService';
 import './ContratoDetail.css';
 
 export function ContratoDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [contrato, setContrato] = useState<Contrato | null>(null);
   const [unidades, setUnidades] = useState<ContratoUnidade[]>([]);
   const [loading, setLoading] = useState(true);
@@ -131,11 +132,42 @@ export function ContratoDetail() {
   return (
     <div className="contrato-detail-page">
       <div className="detail-header">
-        <Link to="/contratos">← Voltar</Link>
+        <div className="header-left">
+          <div className="action-buttons">
+            <button className="tb-btn">+</button>
+            <button className="tb-btn">▢</button>
+            <button className="tb-btn">⟵</button>
+            <button className="tb-btn">⟶</button>
+            <button className="tb-btn">⟲</button>
+            <button className="tb-btn">🗑️</button>
+          </div>
 
-        <h1>
-          {contrato.numContrato} - {contrato.nomeParc}
-        </h1>
+          <div className="contract-info">
+            <span className="contract-badge">ECO</span>
+            <span className="contract-number">{contrato.numContrato}</span>
+            <span className="contract-partner">- {contrato.nomeParc}</span>
+          </div>
+        </div>
+
+        <div className="header-right">
+          <div className="tab-label">Contratos <button className="tab-close" title="Fechar aba" onClick={() => navigate('/')}>✕</button></div>
+        </div>
+      </div>
+
+      <div className="detail-toolbar">
+        <div className="toolbar-left">
+          <button className="tb-btn">☰</button>
+          <button className="tb-btn">▢</button>
+          <button className="tb-btn">◀</button>
+          <button className="tb-btn">▶</button>
+          <button className="tb-btn">⟲</button>
+        </div>
+
+        <div className="toolbar-right">
+          <input className="tb-search" placeholder="Pesquisar contrato..." />
+          <button className="tb-btn">⚙️</button>
+          <button className="tb-btn">🔔</button>
+        </div>
       </div>
 
       <Tabs tabs={tabs} defaultTab="geral" />

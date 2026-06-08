@@ -41,6 +41,10 @@
   background: #f9fafb;
 }
 
+.grid-table tr {
+  cursor: pointer;
+}
+
 /* BADGE */
 .badge {
   padding: 3px 8px;

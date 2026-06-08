@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { listarContratos } from '../../services/contratoService';
 import './Contratos.css';
 
@@ -18,6 +19,8 @@ export function Contratos() {
     await listarContratos('/contratos', setContratos);
     setLoading(false);
   }
+
+  const navigate = useNavigate();
 
   const filtrados = contratos.filter((c) =>
     (c.nomeParc || '').toLowerCase().includes(search.toLowerCase()),
@@ -108,7 +111,14 @@ export function Contratos() {
 
               <tbody>
                 {filtrados.map((c) => (
-                  <tr key={c.numContrato}>
+                  <tr
+                    key={c.numContrato}
+                    onDoubleClick={() => navigate(`/contratos/${c.numContrato}`)}
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') navigate(`/contratos/${c.numContrato}`);
+                    }}
+                  >
                     <td>{c.ativo === 'S' ? 'S' : 'N'}</td>
                     <td>{c.empresa || ''}</td>
                     <td>{c.numContrato}</td>
