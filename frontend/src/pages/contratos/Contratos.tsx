@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Tabs, TabItem } from '../../components/tabs/Tabs';
 import { listarContratos } from '../../services/contratoService';
 import { listarUnidades } from '../../services/contratoUnidadeService';
 import './Contratos.css';
@@ -6,7 +7,6 @@ import type Contrato from '../../models/Contrato';
 import type ContratoUnidade from '../../models/ContratoUnidade';
 
 export function Contratos() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [contratos, setContratos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -78,6 +78,143 @@ export function Contratos() {
     setSelectedContrato(null);
     setSelectedUnidades([]);
   };
+
+  const tabs: TabItem[] = selectedContrato
+    ? [
+        {
+          id: 'geral',
+          label: 'Geral',
+          content: (
+            <div className="tab-content">
+              <div className="form-group-row">
+                <div className="form-group">
+                  <label>Número do contrato</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.numContrato}
+                    disabled
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Parceiro</label>
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      value={selectedContrato.codParc}
+                      disabled
+                    />
+                    <span className="badge">{selectedContrato.nomeParc}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group-row">
+                <div className="form-group">
+                  <label>Local de Utilização</label>
+                  <input value={selectedContrato.localUtilizacao} disabled />
+                </div>
+
+                <div className="form-group">
+                  <label>Ativo</label>
+                  <span>{selectedContrato.ativo === 'S' ? 'Sim' : 'Não'}</span>
+                </div>
+              </div>
+
+              <div className="form-group-row">
+                <div className="form-group">
+                  <label>Data do Contrato</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.dataContrato}
+                    disabled
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Tipo de Contrato</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.tipoContrato}
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div className="form-group-row">
+                <div className="form-group">
+                  <label>Inscrição Estadual</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.inscricaoEstadual}
+                    disabled
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Último Faturamento</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.ultimaFaturamento}
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div className="form-group-row">
+                <div className="form-group">
+                  <label>Descrição</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.descricao}
+                    disabled
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Categoria dos Clientes</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.categoriaClientes}
+                    disabled
+                  />
+                </div>
+              </div>
+            </div>
+          ),
+        },
+        {
+          id: 'unidades',
+          label: 'Contrato-Unidades',
+          content: (
+            <div className="tab-content">
+              {selectedUnidades.length === 0 ? (
+                <div>Nenhuma unidade encontrada</div>
+              ) : (
+                <table className="unidades-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Centro de Custo</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selectedUnidades.map((u) => (
+                      <tr key={u.id}>
+                        <td>{u.id}</td>
+                        <td>{u.codCencus}</td>
+                        <td>{u.ativo === 'S' ? 'Ativo' : 'Inativo'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          ),
+        },
+      ]
+    : [];
 
   return (
     <div className="contratos-page">
@@ -217,181 +354,7 @@ export function Contratos() {
             </div>
 
             {!detailLoading && selectedContrato && (
-              <>
-                {/* CAMPOS DO CONTRATO ACIMA DAS ABAS */}
-                <div className="contract-fields">
-                  <div className="form-group-row">
-                    <div className="form-group">
-                      <label>Número do contrato</label>
-                      <input
-                        type="text"
-                        value={selectedContrato.numContrato}
-                        disabled
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label>Parceiro</label>
-                      <div className="input-group">
-                        <input
-                          type="text"
-                          value={selectedContrato.codParc}
-                          disabled
-                        />
-                        <span className="badge">
-                          {selectedContrato.nomeParc}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-group-row">
-                    <div className="form-group">
-                      <label>Local de Utilização</label>
-                      <input
-                        value={selectedContrato.localUtilizacao}
-                        disabled
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label>Ativo</label>
-                      <span>
-                        {selectedContrato.ativo === 'S' ? 'Sim' : 'Não'}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="form-group-row">
-                    <div className="form-group">
-                      <label>Data do Contrato</label>
-                      <input
-                        type="text"
-                        value={selectedContrato.dataContrato}
-                        disabled
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label>Tipo de Contrato</label>
-                      <input
-                        type="text"
-                        value={selectedContrato.tipoContrato}
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group-row">
-                    <div className="form-group">
-                      <label>Inscrição Estadual</label>
-                      <input
-                        type="text"
-                        value={selectedContrato.inscricaoEstadual}
-                        disabled
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label>Último Faturamento</label>
-                      <input
-                        type="text"
-                        value={selectedContrato.ultimaFaturamento}
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group-row">
-                    <div className="form-group">
-                      <label>Descrição</label>
-                      <input
-                        type="text"
-                        value={selectedContrato.descricao}
-                        disabled
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label>Categoria dos Clientes</label>
-                      <input
-                        type="text"
-                        value={selectedContrato.categoriaClientes}
-                        disabled
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* ABAS COM CONTEÚDO ADICIONAL ABAIXO */}
-                <Tabs
-                  tabs={
-                    [
-                      {
-                        id: 'propriedades',
-                        label: 'Propriedades',
-                        icon: '⚙️',
-                        content: (
-                          <div className="tab-content">
-                            <div className="form-group-row">
-                              <div className="form-group">
-                                <label>Ambiente</label>
-                                <input
-                                  type="text"
-                                  value={selectedContrato.ambiente}
-                                  disabled
-                                />
-                              </div>
-                              <div className="form-group">
-                                <label>Natureza</label>
-                                <input
-                                  type="text"
-                                  value={selectedContrato.natureza}
-                                  disabled
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        ),
-                      },
-                      {
-                        id: 'unidades',
-                        label: 'Contrato-Unidades',
-                        icon: '🏢',
-                        content: (
-                          <div className="tab-content">
-                            {selectedUnidades.length === 0 ? (
-                              <div>Nenhuma unidade encontrada</div>
-                            ) : (
-                              <table className="unidades-table">
-                                <thead>
-                                  <tr>
-                                    <th>ID</th>
-                                    <th>Centro de Custo</th>
-                                    <th>Status</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {selectedUnidades.map((u) => (
-                                    <tr key={u.id}>
-                                      <td>{u.id}</td>
-                                      <td>{u.codCencus}</td>
-                                      <td>
-                                        {u.ativo === 'S' ? 'Ativo' : 'Inativo'}
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            )}
-                          </div>
-                        ),
-                      },
-                    ] as any
-                  }
-                  defaultTab="propriedades"
-                />
-              </>
+              <Tabs tabs={tabs} defaultTab="geral" />
             )}
           </div>
         )}
