@@ -6,11 +6,8 @@ import './Navbar.css';
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [results, setResults] = useState<any[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [menuResults, setMenuResults] = useState<any[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [allContracts, setAllContracts] = useState<any[] | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
@@ -78,7 +75,6 @@ export function Navbar() {
     setMenuResults(matchedMenu);
 
     const list = await loadAllContracts();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const filtered = list.filter((c: any) => {
       const text = `${c.numContrato} ${c.nomeParc}`.toLowerCase();
       return text.includes(value.toLowerCase());
