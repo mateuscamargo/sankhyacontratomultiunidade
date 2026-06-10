@@ -16,4 +16,18 @@ export default interface Contrato {
   ambiente?: string;
   inscricaoEstadual?: string;
   ultimaFaturamento?: string;
+  dtBase?: string;
+  dtTermino?: string;
+  frequencia?: number;
+  diaVencimento?: number;
+  vlrMensal?: number;
+  vlrContrato?: number;
+  parceiro?: { CODPARC: number; NOMEPARC: string; RAZAOSOCIAL?: string };
+  contato_obj?: { CODCONTATO: number; NOMECONT?: string };
+  empresa_obj?: { CODEMP: number; RAZAOABREV?: string; NOMEEMP?: string };
+  natureza_obj?: { CODNAT: number; DESCRNAT: string };
+  tipoTitulo_obj?: { CODTIPTIT: number; DESCTIPTIT?: string };
+  tipoNegociacao_obj?: { CODTIPVENDA: number; DESCRTIPVENDA?: string };
+  top_obj?: { CODTIPOPER: number; DESCROPER?: string };
+  centroCusto_obj?: { CODCENCUS: number; DESCRCENCUS?: string };
 }

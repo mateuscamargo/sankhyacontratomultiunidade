@@ -103,7 +103,6 @@
   font-weight: 700;
 }
 
-/* Search dropdown */
 .search-dropdown {
   position: absolute;
   top: 44px;
@@ -113,7 +112,7 @@
   overflow: auto;
   background: #fff;
   border: 1px solid #e0e0e0;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   border-radius: 6px;
   z-index: 60;
 }
@@ -143,7 +142,6 @@
   color: #777;
 }
 
-/* Menu item specialized layout */
 .menu-icon {
   width: 44px;
   height: 44px;
@@ -166,7 +164,7 @@
   color: #333;
   padding: 2px 6px;
   display: inline-block;
-  background: #fff8d9; /* light yellow highlight */
+  background: #fff8d9;
   border-radius: 3px;
 }
 
@@ -193,8 +191,6 @@
   flex: 1;
   color: #222;
 }
-
-/* Mobile Menu - Hidden by default, pointers disabled */
 
 .mobile-menu {
   position: fixed;
@@ -259,7 +255,6 @@
   pointer-events: auto;
 }
 
-/* App Launcher (desktop) */
 .app-launcher {
   position: fixed;
   top: 64px;
@@ -275,7 +270,7 @@
   border: 1px solid #ddd;
   border-radius: 6px;
   height: 100%;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.16);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
   overflow: hidden;
 }
 
@@ -307,12 +302,12 @@
   width: 48px;
   height: 48px;
   border-radius: 8px;
-  background: linear-gradient(180deg,#f4f6f8,#ffffff);
+  background: linear-gradient(180deg, #f4f6f8, #ffffff);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
-  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.03);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.03);
 }
 
 .app-label {
@@ -321,7 +316,6 @@
   color: #333;
 }
 
-/* scrollbar for launcher */
 .app-launcher-grid::-webkit-scrollbar {
   width: 10px;
 }
@@ -330,7 +324,6 @@
   border-radius: 6px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 1024px) {
   .search-input {
     width: 160px;

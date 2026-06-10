@@ -3,6 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Contrato } from '../entities/contratos.entity';
 import { Repository } from 'typeorm';
 
+const RELATIONS = [
+  'empresa',
+  'parceiro',
+  'contato',
+  'centroCusto',
+  'natureza',
+  'tipoTitulo',
+  'tipoNegociacao',
+  'top',
+];
+
 @Injectable()
 export class ContratosService {
   constructor(
@@ -11,23 +22,13 @@ export class ContratosService {
   ) {}
 
   async findAll(): Promise<Contrato[]> {
-    return this.contratoRepository.find({
-      relations: [
-        'empresa',
-        'parceiro',
-        'contato',
-        'centroCusto',
-        'natureza',
-        'tipoTitulo',
-        'tipoNegociacao',
-        'top',
-      ],
-    });
+    return this.contratoRepository.find({ relations: RELATIONS });
   }
 
   async findById(id: number): Promise<Contrato> {
     const contrato = await this.contratoRepository.findOne({
       where: { NUMCONTRATO: id },
+      relations: RELATIONS,
     });
 
     if (!contrato) {
@@ -40,6 +41,7 @@ export class ContratosService {
   async findByParceiro(codparc: number): Promise<Contrato[]> {
     return this.contratoRepository.find({
       where: { CODPARC: codparc },
+      relations: RELATIONS, // ← estava faltando
     });
   }
 

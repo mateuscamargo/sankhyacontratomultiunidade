@@ -61,7 +61,6 @@
   }
 }
 
-/* Scrollbar para header */
 .tabs-header::-webkit-scrollbar {
   height: 6px;
 }

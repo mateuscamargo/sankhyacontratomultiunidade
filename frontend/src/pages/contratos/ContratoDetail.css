@@ -73,7 +73,6 @@
   border-radius: 4px;
 }
 
-/* Header layout similar to Sankhya */
 .detail-header {
   display: flex;
   justify-content: space-between;

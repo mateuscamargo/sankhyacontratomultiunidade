@@ -1,8 +1,3 @@
-/* ═══════════════════════════════════════════════
-   CONTRATOS PAGE — Sankhya-style layout
-   ═══════════════════════════════════════════════ */
-
-/* ── PAGE WRAPPER ───────────────────────────── */
 .contratos-page {
   display: flex;
   height: calc(100vh - 56px);
@@ -12,7 +7,6 @@
   font-size: 13px;
 }
 
-/* ── FILTER SIDEBAR ─────────────────────────── */
 .filter-sidebar {
   width: 296px;
   min-width: 296px;
@@ -65,7 +59,6 @@
   color: #444;
 }
 
-/* Toggle switch */
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -176,7 +169,6 @@
   font-size: 12px;
 }
 
-/* ── MAIN AREA ──────────────────────────────── */
 .main-area {
   flex: 1;
   display: flex;
@@ -185,7 +177,6 @@
   background: #f0f0f0;
 }
 
-/* ── PAGE TOOLBAR ───────────────────────────── */
 .page-toolbar {
   display: flex;
   align-items: center;
@@ -259,7 +250,6 @@
   text-align: right;
 }
 
-/* ── GRID SEARCH ────────────────────────────── */
 .grid-search-bar {
   padding: 6px 10px;
   background: #f8f8f8;
@@ -275,7 +265,6 @@
   font-size: 12px;
 }
 
-/* ── DATA GRID ──────────────────────────────── */
 .grid-wrapper {
   flex: 1;
   overflow: auto;
@@ -366,7 +355,6 @@
   gap: 24px;
 }
 
-/* ── LOADING ────────────────────────────────── */
 .loading-state {
   padding: 40px;
   text-align: center;
@@ -379,7 +367,6 @@
   font-size: 13px;
 }
 
-/* ── DETAIL AREA ────────────────────────────── */
 .detail-area {
   flex: 1;
   display: flex;
@@ -446,7 +433,6 @@
   color: #c62828;
 }
 
-/* ── FIELDS ABOVE TABS ──────────────────────── */
 .above-tabs-fields {
   display: flex;
   align-items: flex-end;
@@ -492,7 +478,6 @@
   width: 100%;
 }
 
-/* ── LOOKUP FIELD (código + lupa + descrição) ── */
 .lookup-field {
   display: flex;
   align-items: center;
@@ -518,7 +503,6 @@
   width: auto !important;
 }
 
-/* ── TABS WRAPPER ───────────────────────────── */
 .tabs-wrapper {
   flex: 1;
   overflow: auto;
@@ -563,7 +547,6 @@
   overflow: auto;
 }
 
-/* ── TAB CONTENT ────────────────────────────── */
 .tab-content {
   padding: 16px 20px;
 }
@@ -576,7 +559,6 @@
   font-size: 12px;
 }
 
-/* ── FORM ROWS (inside tabs) ────────────────── */
 .form-row {
   display: flex;
   gap: 20px;
@@ -615,7 +597,6 @@
   color: #555;
 }
 
-/* Toggle on/off */
 .toggle-field {
   display: flex;
   align-items: center;
@@ -649,7 +630,6 @@
   color: #333;
 }
 
-/* ── UNIDADES TAB ───────────────────────────── */
 .unidades-toolbar {
   display: flex;
   gap: 6px;

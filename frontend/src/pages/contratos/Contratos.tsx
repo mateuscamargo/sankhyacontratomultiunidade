@@ -1,3 +1,4 @@
+import { CentroCusto } from './../../../../backend/src/centro-custo/entities/centro-custo.entity';
 import { useEffect, useState } from 'react';
 import { Tabs } from '../../components/tabs/Tabs';
 import type { TabItem } from '../../components/tabs/Tabs';
@@ -8,7 +9,7 @@ import type Contrato from '../../models/Contrato';
 import type ContratoUnidade from '../../models/ContratoUnidade';
 
 export function Contratos() {
-  const [contratos, setContratos] = useState<any[]>([]);
+  const [contratos, setContratos] = useState<Contrato[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'detail'>('grid');
@@ -31,14 +32,13 @@ export function Contratos() {
     setLoading(false);
   }
 
-  // Atalho F6: alterna entre Modo Grade e Modo Formulário
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key !== 'F6') return;
       e.preventDefault();
       if (viewMode === 'grid') {
         if (selectedRow !== null) {
-          const c = contratos.find((x: any) => x.numContrato === selectedRow);
+          const c = contratos.find((x) => x.numContrato === selectedRow);
           if (c) void handleRowDoubleClick(c);
         }
       } else {
@@ -50,40 +50,19 @@ export function Contratos() {
   }, [viewMode, selectedRow, contratos]);
 
   const filtrados = contratos.filter((c) =>
-    (c.parceiro?.NOMEPARC || c.numContrato?.toString() || '')
+    (c.nomeParc || c.numContrato?.toString() || '')
       .toLowerCase()
       .includes(search.toLowerCase()),
   );
 
-  const handleRowDoubleClick = async (contrato: any) => {
+  const handleRowDoubleClick = async (contrato: Contrato) => {
     setDetailLoading(true);
     try {
-      const contratoData: Contrato = {
-        id: contrato.numContrato,
-        numContrato: contrato.numContrato,
-        codParc: contrato.codParc,
-        nomeParc: contrato.nomeParc,
-        nomeParcParc: contrato.nomeParcParc || '',
-        empresa: contrato.empresa || '1',
-        categoriaClientes: contrato.categoriaClientes || 'Privado',
-        descricao: contrato.descricao || '',
-        natureza: contrato.natureza || '',
-        ativo: contrato.ativo || 'S',
-        dataContrato: contrato.dataContrato || '',
-        localUtilizacao: contrato.localUtilizacao || '',
-        tipoContrato: contrato.tipoContrato || 'Mensal',
-        ambiente: contrato.ambiente || '',
-        inscricaoEstadual: contrato.inscricaoEstadual || '',
-        ultimaFaturamento: contrato.ultimaFaturamento || '',
-      };
-
-      setSelectedContrato(contratoData);
-
+      setSelectedContrato(contrato);
       await listarUnidades(
         `/contrato-unidades/contrato/${contrato.numContrato}`,
         setSelectedUnidades,
       );
-
       setViewMode('detail');
     } catch (error) {
       console.error('Erro ao carregar detalhes do contrato:', error);
@@ -98,7 +77,6 @@ export function Contratos() {
     setSelectedUnidades([]);
   };
 
-  // Abreviação do nome do parceiro para o badge (primeiras 3 letras)
   const badgeText = selectedContrato?.nomeParc
     ? selectedContrato.nomeParc.substring(0, 3).toUpperCase()
     : 'CON';
@@ -110,7 +88,6 @@ export function Contratos() {
           label: 'Geral',
           content: (
             <div className="tab-content">
-              {/* Linha 1: Inscrição Estadual + Ref. Último Faturamento */}
               <div className="form-row">
                 <div className="form-field">
                   <label>Inscrição Estadual:</label>
@@ -129,8 +106,6 @@ export function Contratos() {
                   />
                 </div>
               </div>
-
-              {/* Linha 2: Ambiente */}
               <div className="form-row">
                 <div className="form-field">
                   <label>Ambiente:</label>
@@ -154,8 +129,6 @@ export function Contratos() {
                   </div>
                 </div>
               </div>
-
-              {/* Linha 3: Data do Contrato */}
               <div className="form-row">
                 <div className="form-field">
                   <label>Data do contrato: *</label>
@@ -170,37 +143,42 @@ export function Contratos() {
                   <div className="lookup-field">
                     <input
                       type="text"
-                      value={selectedContrato.empresa || ''}
+                      value={selectedContrato.empresa_obj?.CODEMP ?? ''}
                       disabled
                       className="lookup-id"
                     />
                     <span className="lookup-icon">🔍</span>
                     <input
                       type="text"
-                      value=""
+                      value={
+                        selectedContrato.empresa_obj?.RAZAOABREV ??
+                        selectedContrato.empresa ??
+                        ''
+                      }
                       disabled
                       className="lookup-desc"
-                      placeholder="Nome da empresa"
                     />
                   </div>
                 </div>
               </div>
-
-              {/* Linha 4: Contato + Tipo de Contrato */}
               <div className="form-row">
                 <div className="form-field">
                   <label>Contato: *</label>
                   <div className="lookup-field">
                     <input
                       type="text"
-                      value=""
+                      value={selectedContrato.contato_obj?.CODCONTATO ?? ''}
                       disabled
                       className="lookup-id"
                     />
                     <span className="lookup-icon">🔍</span>
                     <input
                       type="text"
-                      value=""
+                      value={
+                        selectedContrato.contato_obj?.NOMECONT ??
+                        selectedContrato.contato ??
+                        ''
+                      }
                       disabled
                       className="lookup-desc"
                     />
@@ -218,13 +196,35 @@ export function Contratos() {
                   </select>
                 </div>
               </div>
-
-              {/* Linha 5: Categoria dos Clientes */}
               <div className="form-row">
                 <div className="form-field">
-                  <label>Observação Contrato:</label>
-                  <input type="text" value="" disabled />
+                  <label>TOP para faturamento em contratos:</label>
+                  <div className="lookup-field">
+                    <input
+                      type="text"
+                      value={selectedContrato.top_obj?.CODTIPOPER ?? ''}
+                      disabled
+                      className="lookup-id"
+                    />
+                    <span className="lookup-icon">🔍</span>
+                    <input
+                      type="text"
+                      value={selectedContrato.top_obj?.DESCROPER ?? ''}
+                      disabled
+                      className="lookup-desc"
+                    />
+                  </div>
                 </div>
+                <div className="form-field">
+                  <label>Observação Contrato:</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.descricao || ''}
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="form-row">
                 <div className="form-field">
                   <label>Categoria dos Clientes: *</label>
                   <select
@@ -235,6 +235,46 @@ export function Contratos() {
                     <option>Público</option>
                   </select>
                 </div>
+                <div className="form-field">
+                  <label>Dia p/ Faturamento:</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.diaVencimento ?? ''}
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Valor Mensal de Contrato:</label>
+                  <input
+                    type="text"
+                    value={
+                      selectedContrato.vlrMensal != null
+                        ? Number(selectedContrato.vlrMensal).toLocaleString(
+                            'pt-BR',
+                            { minimumFractionDigits: 2 },
+                          )
+                        : ''
+                    }
+                    disabled
+                  />
+                </div>
+                <div className="form-field">
+                  <label>Valor Contrato:</label>
+                  <input
+                    type="text"
+                    value={
+                      selectedContrato.vlrContrato != null
+                        ? Number(selectedContrato.vlrContrato).toLocaleString(
+                            'pt-BR',
+                            { minimumFractionDigits: 2 },
+                          )
+                        : ''
+                    }
+                    disabled
+                  />
+                </div>
               </div>
             </div>
           ),
@@ -244,32 +284,151 @@ export function Contratos() {
           label: 'Propriedades',
           content: (
             <div className="tab-content">
-              <div className="empty-tab">Nenhuma propriedade disponível</div>
-            </div>
-          ),
-        },
-        /*
-        {
-          id: 'execucao',
-          label: 'Execução',
-          content: (
-            <div className="tab-content">
-              <div className="empty-tab">
-                Nenhum dado de execução disponível
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Natureza: *</label>
+                  <div className="lookup-field">
+                    <input
+                      type="text"
+                      value={selectedContrato.natureza_obj?.CODNAT ?? ''}
+                      disabled
+                      className="lookup-id"
+                    />
+                    <span className="lookup-icon">🔍</span>
+                    <input
+                      type="text"
+                      value={
+                        selectedContrato.natureza_obj?.DESCRNAT ??
+                        selectedContrato.natureza ??
+                        ''
+                      }
+                      disabled
+                      className="lookup-desc"
+                    />
+                  </div>
+                </div>
+                <div className="form-field">
+                  <label>Centro Resultado: *</label>
+                  <div className="lookup-field">
+                    <input
+                      type="text"
+                      value={selectedContrato.centroCusto_obj?.CODCENCUS ?? ''}
+                      disabled
+                      className="lookup-id"
+                    />
+                    <span className="lookup-icon">🔍</span>
+                    <input
+                      type="text"
+                      value={
+                        selectedContrato.centroCusto_obj?.DESCRCENCUS ?? ''
+                      }
+                      disabled
+                      className="lookup-desc"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Tipo de título: *</label>
+                  <div className="lookup-field">
+                    <input
+                      type="text"
+                      value={selectedContrato.tipoTitulo_obj?.CODTIPTIT ?? ''}
+                      disabled
+                      className="lookup-id"
+                    />
+                    <span className="lookup-icon">🔍</span>
+                    <input
+                      type="text"
+                      value={selectedContrato.tipoTitulo_obj?.DESCTIPTIT ?? ''}
+                      disabled
+                      className="lookup-desc"
+                    />
+                  </div>
+                </div>
+                <div className="form-field">
+                  <label>Tipo negociação: *</label>
+                  <div className="lookup-field">
+                    <input
+                      type="text"
+                      value={
+                        selectedContrato.tipoNegociacao_obj?.CODTIPVENDA ?? ''
+                      }
+                      disabled
+                      className="lookup-id"
+                    />
+                    <span className="lookup-icon">🔍</span>
+                    <input
+                      type="text"
+                      value={
+                        selectedContrato.tipoNegociacao_obj?.DESCRTIPVENDA ?? ''
+                      }
+                      disabled
+                      className="lookup-desc"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Data base reajuste: *</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.dtBase || ''}
+                    disabled
+                  />
+                </div>
+                <div className="form-field">
+                  <label>Data de término: *</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.dtTermino || ''}
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Frequência reajuste:</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.frequencia ?? ''}
+                    disabled
+                  />
+                </div>
+                <div className="form-field">
+                  <label>Dia do pagamento:</label>
+                  <input
+                    type="text"
+                    value={selectedContrato.diaVencimento ?? ''}
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Tipo de Pagamento:</label>
+                  <select disabled defaultValue="Mês corrente">
+                    <option>Mês corrente</option>
+                    <option>Mês anterior</option>
+                    <option>Mês seguinte</option>
+                  </select>
+                </div>
+                <div className="form-field">
+                  <label>Periodicidade do Faturamento:</label>
+                  <select disabled defaultValue="Mensal">
+                    <option>Mensal</option>
+                    <option>Bimestral</option>
+                    <option>Trimestral</option>
+                    <option>Semestral</option>
+                    <option>Anual</option>
+                  </select>
+                </div>
               </div>
             </div>
           ),
         },
-        {
-          id: 'observacoes',
-          label: 'Observações',
-          content: (
-            <div className="tab-content">
-              <div className="empty-tab">Sem observações</div>
-            </div>
-          ),
-        },
-        */
         {
           id: 'unidades',
           label: 'Unidades',
@@ -287,10 +446,10 @@ export function Contratos() {
                 <table className="unidades-table">
                   <thead>
                     <tr>
+                      <th>Cód. Empresa</th>
                       <th>ID</th>
                       <th>Contrato</th>
-                      <th>Empresa (Cód.)</th>
-                      <th>Centro de Custo</th>
+                      <th>Cód CentroCusto</th>
                       <th>Data Inclusão</th>
                       <th>Ativo</th>
                     </tr>
@@ -298,11 +457,11 @@ export function Contratos() {
                   <tbody>
                     {selectedUnidades.map((u) => (
                       <tr key={u.id}>
+                        <td>{u.codEmp}</td>
                         <td>{u.id}</td>
                         <td>{u.numContrato}</td>
-                        <td>—</td>
                         <td>{u.codCencus}</td>
-                        <td>—</td>
+                        <td>{u.dtInclusao}</td>
                         <td>
                           <span
                             className={`status-badge ${u.ativo === 'S' ? 'ativo' : 'inativo'}`}
@@ -329,7 +488,6 @@ export function Contratos() {
           <button className="fsb-btn green">+ Filtro</button>
           <button className="fsb-btn">Aplicar</button>
         </div>
-
         <div className="filter-sidebar-toggle">
           <label className="toggle-switch">
             <input type="checkbox" />
@@ -339,9 +497,7 @@ export function Contratos() {
           <span className="filter-badge">0</span>
           <button className="filter-expand-btn">▼</button>
         </div>
-
         <div className="filter-section-title">Filtros rápidos</div>
-
         <div className="filter-group">
           <label>Parceiro</label>
           <div className="filter-input-row">
@@ -350,7 +506,6 @@ export function Contratos() {
             <input type="text" className="filter-desc" />
           </div>
         </div>
-
         <div className="filter-group">
           <label>Centro Resultado</label>
           <div className="filter-input-row">
@@ -359,7 +514,6 @@ export function Contratos() {
             <input type="text" className="filter-desc" />
           </div>
         </div>
-
         <div className="filter-group">
           <label>Natureza</label>
           <div className="filter-input-row">
@@ -368,7 +522,6 @@ export function Contratos() {
             <input type="text" className="filter-desc" />
           </div>
         </div>
-
         <div className="filter-group">
           <label>Projeto</label>
           <div className="filter-input-row">
@@ -377,7 +530,6 @@ export function Contratos() {
             <input type="text" className="filter-desc" />
           </div>
         </div>
-
         <div className="filter-group">
           <label>Situação</label>
           <select defaultValue="Ativo">
@@ -386,7 +538,6 @@ export function Contratos() {
             <option>Todos</option>
           </select>
         </div>
-
         <div className="filter-group">
           <label>Número do contrato</label>
           <input type="text" />
@@ -395,7 +546,6 @@ export function Contratos() {
 
       {/* ── ÁREA PRINCIPAL ────────────────────────────────── */}
       <section className="main-area">
-        {/* ── TOOLBAR DA PÁGINA ── */}
         <div className="page-toolbar">
           <div className="toolbar-left">
             <button
@@ -423,10 +573,7 @@ export function Contratos() {
             <button className="tb-icon-btn" title="Primeiro">
               «
             </button>
-            <button
-              className="tb-icon-btn"
-              title={viewMode === 'detail' ? 'Anterior' : 'Anterior'}
-            >
+            <button className="tb-icon-btn" title="Anterior">
               ‹
             </button>
             <button className="tb-icon-btn" title="Próximo">
@@ -453,6 +600,7 @@ export function Contratos() {
                   {selectedContrato.numContrato}
                 </span>
                 <span className="record-name">
+                  {' '}
                   - {selectedContrato.nomeParc}
                 </span>
                 <div className="tab-chip">
@@ -483,7 +631,6 @@ export function Contratos() {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-
             {loading ? (
               <div className="loading-state">Carregando contratos...</div>
             ) : (
@@ -494,16 +641,18 @@ export function Contratos() {
                       <th>Ativo</th>
                       <th>Empresa</th>
                       <th>Nº Contrato</th>
-                      <th>Categoria dos Clientes</th>
                       <th>Parceiro</th>
                       <th>Nome Parceiro</th>
-                      <th>Descrição (Natureza)</th>
+                      <th>Natureza</th>
+                      <th>Tipo de Operação</th>
+                      <th>Tipo de Título</th>
+                      <th>Contato</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filtrados.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="empty-grid">
+                        <td colSpan={9} className="empty-grid">
                           Nenhum registro encontrado
                         </td>
                       </tr>
@@ -526,12 +675,18 @@ export function Contratos() {
                               className={`ativo-dot ${c.ativo === 'S' ? 'on' : 'off'}`}
                             />
                           </td>
-                          <td>{c.empresa?.RAZAOABREV ?? '—'}</td>
+                          <td>
+                            {c.empresa_obj?.RAZAOABREV ?? c.empresa ?? '—'}
+                          </td>
                           <td className="num-col">{c.numContrato}</td>
-                          <td>{c.categoriaClientes || '—'}</td>
                           <td className="num-col">{c.codParc}</td>
-                          <td>{c.parceiro?.NOMEPARC ?? '—'}</td>
-                          <td>{c.natureza?.DESCRNAT ?? '—'}</td>
+                          <td>{c.nomeParc || '—'}</td>
+                          <td>
+                            {c.natureza_obj?.DESCRNAT ?? c.natureza ?? '—'}
+                          </td>
+                          <td>{c.top_obj?.DESCROPER ?? '—'}</td>
+                          <td>{c.tipoTitulo_obj?.DESCTIPTIT ?? '—'}</td>
+                          <td>{c.contato_obj?.NOMECONT ?? c.contato ?? '—'}</td>
                         </tr>
                       ))
                     )}
@@ -550,11 +705,9 @@ export function Contratos() {
         {/* ── DETAIL VIEW ── */}
         {viewMode === 'detail' && (
           <div className="detail-area">
-            {/* Campos "fora das abas" — visíveis sempre */}
             {!detailLoading && selectedContrato && (
               <>
                 <div className="above-tabs-fields">
-                  {/* Número do contrato */}
                   <div className="atf-field narrow">
                     <label>Número do contrato:</label>
                     <input
@@ -563,8 +716,6 @@ export function Contratos() {
                       disabled
                     />
                   </div>
-
-                  {/* Parceiro */}
                   <div className="atf-field wide">
                     <label>Parceiro: *</label>
                     <div className="lookup-field">
@@ -583,8 +734,6 @@ export function Contratos() {
                       />
                     </div>
                   </div>
-
-                  {/* Local de Utilização */}
                   <div className="atf-field wide">
                     <label>Local de Utilização: *</label>
                     <input
@@ -594,14 +743,11 @@ export function Contratos() {
                     />
                   </div>
                 </div>
-
-                {/* Abas */}
                 <div className="tabs-wrapper">
                   <Tabs tabs={tabs} defaultTab="geral" />
                 </div>
               </>
             )}
-
             {detailLoading && (
               <div className="loading-state">
                 Carregando detalhes do contrato...

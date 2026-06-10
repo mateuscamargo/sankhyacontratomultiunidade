@@ -79,8 +79,6 @@ export class Contrato {
   @Column({ length: 500, nullable: true })
   OBSERVACAO?: string;
 
-  // RELAÇÕES
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   @ManyToOne(() => Empresa)
   @JoinColumn({ name: 'CODEMP' })
   empresa!: Empresa;
@@ -89,7 +87,6 @@ export class Contrato {
   @JoinColumn({ name: 'CODPARC' })
   parceiro!: Parceiro;
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   @ManyToOne(() => Contato)
   @JoinColumn([
     { name: 'CODPARC', referencedColumnName: 'CODPARC' },
@@ -117,7 +114,6 @@ export class Contrato {
   @JoinColumn({ name: 'CODTIPOPER' })
   top!: Top;
 
-  // ✅ RELAÇÃO COM UNIDADES
   @OneToMany(() => ContratoUnidades, (unidade) => unidade.contrato)
   unidades!: ContratoUnidades[];
 }

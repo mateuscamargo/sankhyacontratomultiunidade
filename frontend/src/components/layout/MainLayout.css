@@ -15,7 +15,6 @@ html,
   height: 100vh;
 }
 
-/* When on the home route we want a full-width topbar and a large gray canvas */
 .app.home {
   display: flex;
 }
@@ -24,7 +23,6 @@ html,
   display: none;
 }
 
-/* SIDEBAR */
 .sidebar {
   width: 230px;
   background: #1f2a37;
@@ -33,7 +31,6 @@ html,
   flex-direction: column;
 }
 
-/* NAVBAR */
 .navbar {
   height: 60px;
   background: #0a9a3f;
@@ -42,28 +39,23 @@ html,
   justify-content: space-between;
   padding: 0 20px;
   color: white;
-
-  /* 🔴 GARANTE QUE NÃO QUEBRE */
   position: relative;
 }
 
-/* ÁREA PRINCIPAL */
 .content-area {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* CONTEÚDO */
 .main-content {
   flex: 1;
-  padding: 0; /* match screenshot which shows blank canvas */
+  padding: 0;
   background: #f4f6f8;
   overflow-y: auto;
 }
 
-/* Full-screen gray canvas for initial screen */
 .content-area.home .main-content {
-  background: #595959; /* neutral dark gray like screenshot */
+  background: #595975;
   min-height: calc(100vh - 56px);
 }

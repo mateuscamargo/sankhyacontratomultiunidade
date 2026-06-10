@@ -10,6 +10,7 @@ export class ContratoUnidadesController {
   async findByContrato(
     @Param('numcontrato', ParseIntPipe) numcontrato: number,
   ): Promise<ContratoUnidades[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.service.findByContrato(numcontrato);
   }
 }

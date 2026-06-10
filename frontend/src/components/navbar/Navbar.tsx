@@ -6,8 +6,11 @@ import './Navbar.css';
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [results, setResults] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [menuResults, setMenuResults] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [allContracts, setAllContracts] = useState<any[] | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
@@ -20,7 +23,10 @@ export function Navbar() {
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setShowDropdown(false);
       }
     }
@@ -55,7 +61,6 @@ export function Navbar() {
       return;
     }
 
-    // menu items (static menu of the app)
     const menuItems = [
       {
         id: 'contratos',
@@ -67,10 +72,13 @@ export function Navbar() {
       },
     ];
 
-    const matchedMenu = menuItems.filter((m) => m.label.toLowerCase().includes(value.toLowerCase()));
+    const matchedMenu = menuItems.filter((m) =>
+      m.label.toLowerCase().includes(value.toLowerCase()),
+    );
     setMenuResults(matchedMenu);
 
     const list = await loadAllContracts();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const filtered = list.filter((c: any) => {
       const text = `${c.numContrato} ${c.nomeParc}`.toLowerCase();
       return text.includes(value.toLowerCase());
@@ -95,14 +103,24 @@ export function Navbar() {
     <>
       <nav className="navbar topbar">
         <div className="navbar-left">
-          <button className="menu-toggle" onClick={toggleMenu} aria-label="Abrir menu">
+          <button
+            className="menu-toggle"
+            onClick={toggleMenu}
+            aria-label="Abrir menu"
+          >
             <span />
             <span />
             <span />
           </button>
 
           <div className="brand">
-            <Link to="/" className="brand-logo" onClick={() => setMenuOpen(false)}>Sankhya</Link>
+            <Link
+              to="/"
+              className="brand-logo"
+              onClick={() => setMenuOpen(false)}
+            >
+              Sankhya
+            </Link>
           </div>
         </div>
 
@@ -113,7 +131,9 @@ export function Navbar() {
               placeholder="Pesquisar"
               value={query}
               onChange={(e) => void handleSearchChange(e.target.value)}
-              onFocus={() => { if (results.length || menuResults.length) setShowDropdown(true); }}
+              onFocus={() => {
+                if (results.length || menuResults.length) setShowDropdown(true);
+              }}
             />
             <button
               className="search-btn"
@@ -130,7 +150,11 @@ export function Navbar() {
                   <div className="menu-section">
                     <div className="section-title">Mais utilizada</div>
                     {menuResults.map((m) => (
-                      <div key={m.id} className="search-item menu-item" onClick={() => goToRoute(m.route)}>
+                      <div
+                        key={m.id}
+                        className="search-item menu-item"
+                        onClick={() => goToRoute(m.route)}
+                      >
                         <div className="menu-icon">{m.icon}</div>
                         <div className="menu-body">
                           <div className="menu-title">{m.label}</div>
@@ -141,25 +165,33 @@ export function Navbar() {
                   </div>
                 )}
 
-                {results.length > 0 ? (
-                  results.map((r) => (
-                    <div key={r.numContrato} className="search-item" onClick={() => goToContract(r.numContrato)}>
-                      <div className="s-left">{r.numContrato}</div>
-                      <div className="s-right">{r.nomeParc}</div>
-                    </div>
-                  ))
-                ) : (
-                  menuResults.length === 0 && (
-                    <div className="search-empty">Nenhum resultado</div>
-                  )
-                )}
+                {results.length > 0
+                  ? results.map((r) => (
+                      <div
+                        key={r.numContrato}
+                        className="search-item"
+                        onClick={() => goToContract(r.numContrato)}
+                      >
+                        <div className="s-left">{r.numContrato}</div>
+                        <div className="s-right">{r.nomeParc}</div>
+                      </div>
+                    ))
+                  : menuResults.length === 0 && (
+                      <div className="search-empty">Nenhum resultado</div>
+                    )}
               </div>
             )}
           </div>
 
-          <button className="icon-btn" title="Ajuda">?</button>
-          <button className="icon-btn" title="Notificações">🔔</button>
-          <div className="avatar" title="Usuário">MC</div>
+          <button className="icon-btn" title="Ajuda">
+            ?
+          </button>
+          <button className="icon-btn" title="Notificações">
+            🔔
+          </button>
+          <div className="avatar" title="Usuário">
+            MC
+          </div>
         </div>
       </nav>
 
@@ -169,7 +201,12 @@ export function Navbar() {
           <div className="app-launcher-inner">
             <div className="app-launcher-grid">
               {[
-                { id: 'contratos', label: 'Contratos', icon: '📋', route: '/contratos' },
+                {
+                  id: 'contratos',
+                  label: 'Contratos',
+                  icon: '📋',
+                  route: '/contratos',
+                },
               ].map((a) => (
                 <div
                   key={a.id}
@@ -192,17 +229,30 @@ export function Navbar() {
         <>
           <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
             <div className="mobile-menu-content">
-              <Link to="/" className="mobile-menu-item" onClick={() => setMenuOpen(false)}>
+              <Link
+                to="/"
+                className="mobile-menu-item"
+                onClick={() => setMenuOpen(false)}
+              >
                 <span className="icon">🏠</span>
                 <span>Início</span>
               </Link>
-              <Link to="/contratos" className="mobile-menu-item" onClick={() => setMenuOpen(false)}>
+              <Link
+                to="/contratos"
+                className="mobile-menu-item"
+                onClick={() => setMenuOpen(false)}
+              >
                 <span className="icon">📋</span>
                 <span>Contratos</span>
               </Link>
             </div>
           </div>
-          {menuOpen && <div className="mobile-menu-overlay open" onClick={() => setMenuOpen(false)} />}
+          {menuOpen && (
+            <div
+              className="mobile-menu-overlay open"
+              onClick={() => setMenuOpen(false)}
+            />
+          )}
         </>
       )}
     </>
