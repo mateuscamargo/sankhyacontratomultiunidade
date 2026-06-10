@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/require-await */
 import { Controller, Get, Res } from '@nestjs/common';
 import { ApiExcludeEndpoint } from '@nestjs/swagger';
 
@@ -10,7 +8,6 @@ export class AppController {
   @ApiExcludeEndpoint()
   @Get()
   async redirect(@Res() resposta: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
     return resposta.redirect('/swagger');
   }
 }
