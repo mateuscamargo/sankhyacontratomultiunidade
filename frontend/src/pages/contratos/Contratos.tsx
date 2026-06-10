@@ -1,4 +1,3 @@
-import { CentroCusto } from './../../../../backend/src/centro-custo/entities/centro-custo.entity';
 import { useEffect, useState } from 'react';
 import { Tabs } from '../../components/tabs/Tabs';
 import type { TabItem } from '../../components/tabs/Tabs';

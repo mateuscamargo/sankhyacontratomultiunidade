@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ContratosModule } from './contratos/contratos.module';
 import { ContratoUnidadesModule } from './contrato-unidades/contrato-unidades.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { ContratoUnidadesModule } from './contrato-unidades/contrato-unidades.mo
     ContratoUnidadesModule,
   ],
 
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

@@ -1,7 +1,9 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ContratoUnidadesService } from '../services/contrato-unidades.service';
 import { ContratoUnidades } from '../entities/contrato-unidades.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Contrato-Unidades')
 @Controller('/contrato-unidades')
 export class ContratoUnidadesController {
   constructor(private readonly service: ContratoUnidadesService) {}
